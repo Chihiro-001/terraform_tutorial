@@ -9,7 +9,3 @@ variable "subnet_cidr" {
 variable "html_file_path" {
   default = "./application/index.html"
 }
-
-# variable "subnet_public_id" {
-#   description = "The subnet IDs"
-# }
