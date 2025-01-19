@@ -11,7 +11,3 @@ docker run \
     -e DEBUG=1 \
     -e DOCKER_HOST="unix:///var/run/docker.sock" \
     localstack/localstack
-
-export AWS_ACCESS_KEY_ID=test
-export AWS_SECRET_ACCESS_KEY=test
-export AWS_DEFAULT_REGION=ap-northeast-1

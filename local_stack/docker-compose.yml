@@ -1,0 +1,46 @@
+services:
+  localstack:
+    build: ./local-server/localstack
+    container_name: localstack
+    ports:
+      - "4566:4566"  # LocalStack Gateway
+    environment:
+      SERVICES: ec2,s3  # Add all required services
+      DEBUG: 1
+      AWS_ACCESS_KEY_ID: test
+      AWS_SECRET_ACCESS_KEY: test
+      AWS_DEFAULT_REGION: ap-northeast-1
+      LOCALSTACK_URL: http://localstack:4566
+    volumes:
+      - localstack_data:/var/lib/localstack
+      - "/var/run/docker.sock:/var/run/docker.sock"
+
+  setup-localstack:
+    build: ./local-server/setup-localstack
+    container_name: setup-localstack
+    environment:
+      DEBUG: 1
+      AWS_ACCESS_KEY_ID: test
+      AWS_SECRET_ACCESS_KEY: test
+      AWS_DEFAULT_REGION: ap-northeast-1
+      LOCALSTACK_URL: http://localstack:4566
+    depends_on:
+      localstack:
+        condition: service_healthy
+    volumes:
+      - localstack_data:/var/lib/localstack
+
+  ec2:
+    build: ./_ec2
+    container_name: ec2
+    ports:
+      - 8000:8000
+    depends_on:
+      setup-localstack:
+        condition: service_completed_successfully
+    volumes:
+      - ec2_data:/var/lib/ec2
+
+volumes:
+  localstack_data:
+  ec2_data:
