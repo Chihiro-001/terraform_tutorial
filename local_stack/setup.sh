@@ -1,6 +1,9 @@
 # Setup LocalStack
+
+echo "Setup LocalStack"
+
 docker run \
-    --rm -it \
+    -d --rm -it \
     -p 127.0.0.1:4566:4566 \
     -p 127.0.0.1:4510-4559:4510-4559 \
     -v /var/run/docker.sock:/var/run/docker.sock \
