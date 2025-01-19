@@ -5,7 +5,7 @@ resource "aws_instance" "web" {
     subnet_id     = var.public_subnet_id
 
     # Security group assign to instance
-    vpc_security_group_ids= [var.vpc_security_group_ids]
+    vpc_security_group_ids= [aws_security_group.allow_http.id]
 
     user_data = <<-EOF
                             #!/bin/bash
