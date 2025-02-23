@@ -1,4 +1,4 @@
 module "config" {
-  source = "../../modules/config"
-  env = var.env
+  source = "../../../modules/config"
+  env    = var.env
 }

@@ -1,6 +1,6 @@
 provider "aws" {
   region  = "ap-northeast-1"
-  profile = "default"
+  profile = "default" # Please confirm the profile name
   default_tags {
     tags = {
       "Environment" = "stg"
@@ -13,7 +13,7 @@ terraform {
   required_providers {
     aws = {
       source = "hashicorp/aws"
-      # version = "~> 5.0"
+      # version = "~> 5.0" # If not specified, the latest version will be used
     }
   }
   # backend "s3" {
