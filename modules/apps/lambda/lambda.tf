@@ -3,25 +3,6 @@ locals {
     function_name = "${var.config.stage}_s3_lambda_function"
 }
 
-
-data "archive_file" "function" {
-  type        = "zip"
-  source_dir  = "${path.module}/src"
-  output_path = "/tmp/${local.function_name}.zip"
-  
-}
-
-resource "null_resource" "lambda_zip" {
-  provisioner "local-exec" {
-    command = "zip /tmp/${local.function_name}.zip lambda_function.py"
-    working_dir = "${path.module}"
-  }
-
-  triggers = {
-    always_run = "${timestamp()}"
-  }
-}
-
 resource "local_file" "lambda_file" {
   content  = <<EOF
 import json
@@ -36,6 +17,22 @@ EOF
   filename = "${path.module}/src/lambda_function.py"
 }
 
+data "archive_file" "function" {
+  type        = "zip"
+  source_dir  = "${path.module}/src"
+  output_path = "/tmp/${local.function_name}.zip"
+}
+
+resource "null_resource" "lambda_zip" {
+  provisioner "local-exec" {
+    command = "zip /tmp/${local.function_name}.zip lambda_function.py"
+    working_dir = "${path.module}/src"
+  }
+
+  triggers = {
+    always_run = "${timestamp()}"
+  }
+}
 
 resource "aws_lambda_function" "s3_lambda" {
   depends_on = [ aws_iam_role.iam_for_lambda ]
@@ -47,7 +44,6 @@ resource "aws_lambda_function" "s3_lambda" {
 
   source_code_hash = data.archive_file.function.output_base64sha256
 }
-
 
 resource "aws_lambda_permission" "s3_lambda" {
   statement_id  = "AllowExecutionFromS3Bucket"
