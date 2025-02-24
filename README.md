@@ -8,7 +8,7 @@ japanese instruction is below
    1. environments
       1. stg: used for staging
       2. prod: used for production
-      3. common: used for both staging and prod. Typically for Network.
+
    2. modules
       1. apps: used to store modules for apps
       2. config: used to store modules for configuration such as default tag names, default AWS regions, etc
@@ -16,6 +16,12 @@ japanese instruction is below
    1. In case you want to manage the state file locally, make sure to create the .gitignore before `git commit`. Otherwise, your remote git repo won't accept your push due to large file size. The state file is over the capacity of remote repos. 
    2. Alternatively you can install `git lfs` and manage the state file and remove the file from your commits.
    3. Or, manage your state file remotely, such as using S3 bucket.
+
+---
+
+### Confirm you AWS CLI Credential
+
+Please confirm you have configured the AWS CLI Credential linked to the AWS Account you are intended to use.
 
 ---
 
@@ -29,8 +35,8 @@ Terraform supports multi cloud provider. you need to first specify which cloud p
 cd ./environments/stg/main
 touch provider.tf
 ```
-1. For the content, you can use the sample file.
-2. Please confirm if the profile name is the same as the AWS account you are intented to build infrastructure.
+1. For the content, you can use the sample file or you can check the documentation [here](https://registry.terraform.io/providers/hashicorp/aws/latest/docs)
+2. Please confirm if the profile name is referring to the AWS account you are intented to build infrastructure.
 3. You can specify the terraform version. If not specified, Terraform will use the latest version.
 
 ---
@@ -77,6 +83,8 @@ variable "env" {
 
 }
 ```
+
+In Terraform, variables.tf files declare variables, while terraform.tfvars files assign values to those variables. Both are variable files that help with configuration management. 
 
 ---
 
