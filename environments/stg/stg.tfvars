@@ -1,3 +1,0 @@
-env = {
-  name = "stg-ismail"
-}
