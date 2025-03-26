@@ -1,4 +1,4 @@
 module "main" {
-  source = "../../../modules/main"
-  
+  source = "../../modules"
+
 }
