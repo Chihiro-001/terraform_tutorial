@@ -1,6 +1,6 @@
 # invoke the lambda function when the objects are uploaded to the s3 bucket.
 locals {
-    function_name = "${var.config.stage}_s3_lambda_function"
+  function_name = "${var.config.stage}_s3_lambda_function"
 }
 
 resource "local_file" "lambda_file" {
@@ -25,7 +25,7 @@ data "archive_file" "function" {
 
 resource "null_resource" "lambda_zip" {
   provisioner "local-exec" {
-    command = "zip /tmp/${local.function_name}.zip lambda_function.py"
+    command     = "zip /tmp/${local.function_name}.zip lambda_function.py"
     working_dir = "${path.module}/src"
   }
 
@@ -35,7 +35,7 @@ resource "null_resource" "lambda_zip" {
 }
 
 resource "aws_lambda_function" "s3_lambda" {
-  depends_on = [ aws_iam_role.iam_for_lambda ]
+  depends_on    = [aws_iam_role.iam_for_lambda]
   function_name = local.function_name
   role          = aws_iam_role.iam_for_lambda.arn
   handler       = "lambda_function.lambda_handler"
