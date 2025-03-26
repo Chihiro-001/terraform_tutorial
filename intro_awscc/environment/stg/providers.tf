@@ -4,7 +4,7 @@ provider "awscc" {
 }
 
 provider "aws" {
-  region = "ap-northeast-1"
+  region  = "ap-northeast-1"
   profile = "default"
 }
 
@@ -13,9 +13,9 @@ terraform {
   required_providers {
     awscc = {
       source = "hashicorp/awscc"
-    } 
-   aws = {
-     source = "hashicorp/aws"
-   }   
+    }
+    aws = {
+      source = "hashicorp/aws"
     }
   }
+}
